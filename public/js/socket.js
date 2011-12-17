@@ -78,10 +78,8 @@
         console.log('lose', id)
         playersList.find('#p-'+id).addClass('lost')
 
-        if (root.playing) {
-          if (id === root.playerId) {
-            youLost()
-          }
+        if (id === root.playerId) {
+          youLost()
         }
       })
 
@@ -124,6 +122,7 @@
       modal
         .fadeIn()
         .queue(function(n) { $(this).html('You Lost!'); n() })
+        .delay(1500)
       
       root.playing = false
     }
@@ -172,6 +171,7 @@
         .queue(function(n) { $(this).html('Game Over'); n() })
         .delay(1500)
         .queue(function(n) { $(this).html(players[id].name+' Won!'); n() })
+        .delay(1500)
     }
 
     // Exports
