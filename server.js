@@ -22,9 +22,9 @@ io.sockets.on('connection', function (socket) {
     words: {}
   }
 
-  socket.emit('players', players)
+  io.sockets.emit('players', players)
 
-  socket.emit('used', playedWords)
+  io.sockets.emit('used', playedWords)
 
   socket.on('attack', function (word, fn) {
     word = word.toUpperCase()
@@ -53,5 +53,6 @@ io.sockets.on('connection', function (socket) {
 
   socket.on('disconnect', function() {
     delete players[socket.id]
+    io.sockets.emit('players', players)
   })
 });

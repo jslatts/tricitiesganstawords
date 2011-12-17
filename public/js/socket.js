@@ -43,9 +43,11 @@
 
       socket.on('players', function(people) {
         if (!people) return
-
+        
+        players.empty()
+        console.log(people)
         Object.keys(people).forEach(function(person) {
-          players.prepend('<li>'+person+'</li>')
+          players.append('<li>'+person+'</li>')
         })
       })
 

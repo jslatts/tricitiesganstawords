@@ -16,6 +16,7 @@
       , wbottom = h - 72
       , rbottom = h - 33
       , rtop = h + 10
+      , verticalSpacing = 12
     
 
 
@@ -26,10 +27,10 @@
     })
     var paper = Raphael('holder', w,h)
 
-    var youWords = {'bottomHeight': 12
+    var youWords = {'bottomHeight': verticalSpacing
       , 'columnLocation': w/4
       , 'words': {}}
-    var themWords = {'bottomHeight': 12
+    var themWords = {'bottomHeight': verticalSpacing
       , 'columnLocation': w*3/4
       , 'words': {}}
 
@@ -42,10 +43,10 @@
     }
 
     function reStackWords(wordList) {
-      wordList.bottomHeight = 12
+      wordList.bottomHeight = verticalSpacing
       Object.keys(wordList.words).forEach(function(word) {
         drop(wordList.words[word], wordList.bottomHeight)
-        wordList.bottomHeight += 12
+        wordList.bottomHeight += verticalSpacing
       })
     }
 
@@ -76,13 +77,13 @@
         attackText.node.setAttribute('class', 'word you')
         youWords.words[attackWord] = attackText 
         drop(attackText, youWords.bottomHeight)
-        youWords.bottomHeight += 12
+        youWords.bottomHeight += verticalSpacing
       }
       else {
         attackText.node.setAttribute('class', 'word them')
         themWords.words[attackWord] = attackText
         drop(attackText, themWords.bottomHeight)
-        themWords.bottomHeight += 12
+        themWords.bottomHeight += verticalSpacing
       }
 
     }
@@ -91,17 +92,18 @@
     var resetSpacer
     var currentWord = ''
     var text = paper.text(w/2, rbottom, currentWord)
+    text.node.setAttribute('class', 'word input')
 
     function addLetter(letter) {
       currentWord += letter
       spacer += 1
-      text.attr({'text': currentWord, 'font-size': 16}).toFront()
+      text.attr({'text': currentWord}).toFront()
     }
 
     function deleteLetter() {
       currentWord = currentWord.substring(0, currentWord.length -1)
       spacer -= 1
-      text.attr({'text': currentWord, 'font-size': 16}).toBack()
+      text.attr({'text': currentWord}).toBack()
     }
 
     function resetWord() {
