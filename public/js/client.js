@@ -10,39 +10,44 @@
           if ( code == 8 ) return false;
        }
     });
-    var w = $(window).width()
-      , h = $(window).height() - 100
+    var w = $('#holder').width()
+      , h = $('#holder').height()
       , defaultSpeed = 10
+      , wbottom = h - 60
+      , rbottom = h - 33
+      , rtop = h + 10
+    
 
 
     $(window).resize(function(){
-         w = $(window).width()
-         h = $(window).height()
+         w = $('#holder').width()
+         h = $('#holder').height()
          paper.setSize(w,h)
-         redraw_element() // code to handle re-drawing, if necessary
     })
     var paper = Raphael('holder', w,h)
 
     var youWords = {'bottomHeight': 12
-      , 'columnLocation': w/6
+      , 'columnLocation': w/4
       , 'words': {}}
     var themWords = {'bottomHeight': 12
-      , 'columnLocation': w*3/6-15
+      , 'columnLocation': w*3/4
       , 'words': {}}
 
-    var drop = function(t, yDest ) {
+    var drop = function(t, fromBottom ) {
+      yDest = wbottom-fromBottom
       t.animate({y: yDest}, ((yDest-t.attrs.y)*defaultSpeed))
     }
 
     function reStackWords(wordList) {
       wordList.bottomHeight = 12
       Object.keys(wordList.words).forEach(function(word) {
-        drop(wordList.words[word], h-(10+wordList.bottomHeight))
+        drop(wordList.words[word], wordList.bottomHeight)
         wordList.bottomHeight += 12
       })
     }
 
     exports.destroyWord = function(destroyWord, isMe) {
+      destroyWord = destroyWord.toLowerCase()
       if (isMe) {
         youWords.words[destroyWord].attr({'text': ''})
         delete youWords.words[destroyWord]
@@ -65,14 +70,16 @@
       attackText.attr({'font-size': 16}).toFront()
 
       if (!isMe) {
+        attackText.node.setAttribute('class', 'word you')
         youWords.words[attackWord] = attackText 
         youWords.bottomHeight += 12
-        drop(attackText, h-(10+youWords.bottomHeight))
+        drop(attackText, youWords.bottomHeight)
       }
       else {
+        attackText.node.setAttribute('class', 'word them')
         themWords.words[attackWord] = attackText
         themWords.bottomHeight += 12
-        drop(attackText, h-(10+themWords.bottomHeight))
+        drop(attackText, themWords.bottomHeight)
       }
 
     }
@@ -80,7 +87,7 @@
     var spacer = 1
     var resetSpacer
     var currentWord = ''
-    var text = paper.text(w/3, h-80, currentWord)
+    var text = paper.text(w/2, rbottom, currentWord)
 
     function addLetter(letter) {
       currentWord += letter
