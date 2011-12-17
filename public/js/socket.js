@@ -20,6 +20,10 @@
 
     var usedWords = $('#used-words')
 
+    function handleUsed(str, id) {
+      root.usedWords[str] = id
+      usedWords.prepend('<li>'+str+'</li>')
+    }
 
     socket.on('connect', function() {
       root.playerId = socket.socket.sessionid
@@ -28,8 +32,7 @@
       socket.on('attack', function(str, id) {
         console.log('server attack')
 
-        root.usedWords[str] = id
-        usedWords.prepend('<li>'+str+'</li>')
+        handleUsed(str, id)
         root.exports.incomingWord(str, (id === root.playerId))
       })
 
