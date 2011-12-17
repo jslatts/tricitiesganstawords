@@ -38,21 +38,51 @@
     }
 
 
-    exports.words = words = {}
+    youWords = {'bottomHeight': 12, 'words': {}}
+    themWords = {'bottomHeight': 12, 'words': {}}
 
-    var drop = function(t) {
-      t.animate({y: h-(10+bottomHeight)}, 10000)
+    var drop = function(t, yDest ) {
+      t.animate({y: yDest}, 10000)
     }
 
-    var bottomHeight = 12
+    function reStackWords(wordList) {
+      wordList.bottomHeight = 12
+      Object.keys(wordList.words).forEach(function(word) {
+        wordList.words[word].attr({'y': h-(10+wordList.bottomHeight)})
+        wordList.bottomHeight += 12
+      })
+    }
+
+    exports.destroyWord = function(destroyWord, isMe) {
+      if (isMe) {
+        youWords.words[destroyWord].attr({'text': ''})
+        delete youWords.words[destroyWord]
+        reStackWords(youWords)
+      }
+      else {
+        themWords.words[destroyWord].attr({'text': ''})
+        delete themWords.words[destroyWord]
+        reStackWords(themWords)
+      }
+    }
 
     exports.incomingWord = function(attackWord, isMe) {
+      isMe = true
       console.log('Incoming word received ' + attackText + ' for ' + isMe ? 'me' : 'them')
       var attackText = paper.text(isMe ? w/4-100 : w*3/4+100, 30, attackWord)
       attackText.attr({'font-size': 16}).toBack()
-      drop(attackText)
-      words[attackWord] = {'falling': true}
-      bottomHeight +=12
+
+      if (isMe) {
+        youWords.words[attackWord] = attackText 
+        youWords.bottomHeight += 12
+        drop(attackText, h-(10+youWords.bottomHeight))
+      }
+      else {
+        themWords.words[attackWord] = attackText
+        themWords.bottomHeight += 12
+        drop(attackText, h-(10+themWords.bottomHeight))
+      }
+
     }
 
     var spacer = 1
