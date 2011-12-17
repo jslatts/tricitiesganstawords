@@ -27,7 +27,7 @@
       root.exports.incomingWord(str, (id === root.playerId))
     })
 
-    socket.on('block', function(str, id) {
+    socket.on('destroy', function(str, id) {
       console.log('server block')
       
       root.exports.destroyWord(str, (id === root.playerId))
@@ -42,18 +42,10 @@
   // ---------
 
   function attack(str, fn) {
+    console.log('attack', str)
     socket.emit('attack', str, function(err) {
       if (err) {
         console.log('Attack Error: ', err)
-      }
-      fn && fn(err)
-    })
-  }
-
-  function destroy(str, fn) {
-    socket.emit('destroy', str, function(err) {
-      if (err) {
-        console.log('Destroy Error: ', err)
       }
       fn && fn(err)
     })
@@ -63,7 +55,6 @@
   // -------
 
   root.attack = attack
-  root.destroy = destroy
 
   // Testing
   $(function() {
