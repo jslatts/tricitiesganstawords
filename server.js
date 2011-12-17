@@ -24,7 +24,7 @@ io.sockets.on('connection', function (socket) {
 
   io.sockets.emit('players', players)
 
-  io.sockets.emit('used', playedWords)
+  socket.emit('used', playedWords)
 
   socket.on('attack', function (word, fn) {
     word = word.toUpperCase()
