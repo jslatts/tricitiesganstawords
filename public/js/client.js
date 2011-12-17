@@ -23,8 +23,12 @@
     })
     var paper = Raphael('holder', w,h)
 
-    var youWords = {'bottomHeight': 12, 'words': {}}
-    var themWords = {'bottomHeight': 12, 'words': {}}
+    var youWords = {'bottomHeight': 12
+      , 'columnLocation': w/6
+      , 'words': {}}
+    var themWords = {'bottomHeight': 12
+      , 'columnLocation': w*3/6-15
+      , 'words': {}}
 
     var drop = function(t, yDest ) {
       t.animate({y: yDest}, ((yDest-t.attrs.y)*defaultSpeed))
@@ -53,12 +57,14 @@
 
     exports.incomingWord = function(attackWord, isMe) {
       attackWord = attackWord.toLowerCase()
-      isMe = true
       console.log('Incoming word received ' + attackText + ' for ' + isMe ? 'me' : 'them')
-      var attackText = paper.text(isMe ? w/4-100 : w*3/4+100, 30, attackWord)
+      var attackText = paper.text(isMe 
+          ? themWords.columnLocation 
+          : youWords.columnLocation, 30, attackWord)
+
       attackText.attr({'font-size': 16}).toFront()
 
-      if (isMe) {
+      if (!isMe) {
         youWords.words[attackWord] = attackText 
         youWords.bottomHeight += 12
         drop(attackText, h-(10+youWords.bottomHeight))
