@@ -2,26 +2,124 @@
 <html>
 <head>
   <style type="text/css">
+    body {
+      background: #eeeeee;
+    }
     #header {
-      width: 450px;
-      margin-left: auto;
-      margin-right: auto
+      height: 100px;
+      text-align: center;
+      overflow: hidden;
+      display: none;
     }
     #hud {
-      height:50;
-      color:red;
-      display:none
+      height: 50px;
+      color: red;
+      display: none
     }
+    #left, #right {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 175px;
+      background: #ccc;
+      overflow: auto;
+    }
+      #right h2, #left h2 {
+        margin: 0;
+        text-align: center;
+        font-size: 15px;
+        line-height: 30px;
+        height: 30px;
+        border-bottom: 1px solid #777;
+      }
+      #left {
+        left: 0;
+        border-right: 1px solid #aaa;
+      }
+      #right {
+        right: 0;
+        border-left: 1px solid #aaa;
+      }
+    #game-wrapper, #holder {
+      overflow: hidden;
+      position: absolute;
+      top: 10px;
+      bottom: 10px;
+      left: 200px;
+      right: 200px;
+      z-index: 1;
+    }
+      #holder {
+        z-index: 99;
+      }
+      #you, #them {
+        position: absolute;
+        width: 50%;
+        text-align: center;
+        height: 30px;
+        overflow: hidden;
+      }
+        #you h1, #them h1 {
+          margin: 0;
+          padding: 0;
+          font-size: 20px;
+        }
+        #you {
+          left: 0;
+        }
+        #them {
+          right: 0;
+        }
+      #game {
+        background: #D6FFC2;
+        border: 2px solid #aaa;
+        border-radius: 10px;
+        position: absolute;
+        top: 40px;
+        left: 0;
+        right: 0;
+        bottom: 70px;
+      }
+      #input {
+        background: #C2FFA3;
+        border: 2px solid #666;
+        border-radius: 10px;
+        padding: 5px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 10px;
+        height: 30px;
+      }
   </style>
 </head>
 <body> 
   <div id="header">
     <h1>Tri-Cities GANGSTA WeRDS!</h1>
   </div>
-  <div id='hud'>
-    <span id='badWord'>Invalid Word</span>
+  <div id="wrapper">
+    <div id="left">
+      <h2>Used Words</h2>
+      <ol id="used-words"></ol>
+      <div id='hud'>
+        <span id='badWord'>Invalid Word</span>
+      </div>
+    </div>
+    <div id="right">
+      <h2>Stats</h2>
+    </div>
+    <div id="holder"></div>
+    <div id="game-wrapper">
+      <div id="you">
+        <h1>You</h1>
+      </div>
+      <div id="them">
+        <h1>Them</h1>
+      </div>
+      <div id="game"></div>
+      <div id="input"></div>
+    </div>
   </div>
-  <div id="holder"></div>
 
   <script src="/socket.io/socket.io.js"></script> 
   <script src="js/underscore-min.js"></script>
