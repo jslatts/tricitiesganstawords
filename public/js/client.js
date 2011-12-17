@@ -1,7 +1,8 @@
 (function() {
   //Setup
   exports = typeof exports !== 'undefined' ? exports : {}
-  window.onload = function() {
+  $(function() {
+    
     $(document).unbind('keypress');
 
     $(document).keypress(function (e) {
@@ -107,5 +108,5 @@
         addLetter(letter)
       }
     }
-  }
+  })
 }())

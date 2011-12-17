@@ -16,6 +16,7 @@ var io = socket.listen(app)
 io.sockets.on('connection', function (socket) {
 
   socket.on('subscribe', function(fn) {
+    console.log('subscribe')
     fn(socket.id)
   })
 
