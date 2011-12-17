@@ -55,6 +55,10 @@ io.sockets.on('connection', function (socket) {
               Object.keys(players).forEach(function(_id) {
                 if (losers.indexOf(_id) == -1) {
                   io.sockets.emit('win', _id)
+                  Object.keys(players).forEach(function(_id) {
+                    players[_id].words = {}
+                  })
+                  playedWords = {}
                 }
               })
             }
