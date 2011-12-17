@@ -75,7 +75,7 @@ io.sockets.on('connection', function (socket) {
 });
 
 setInterval(function() {
-  if (Object.keys(players).length >= 1 && !gameStarted) {
+  if (Object.keys(players).length >= 2 && !gameStarted) {
     io.sockets.emit('start', true);
     gameStarted = true;
   }
@@ -87,7 +87,7 @@ setInterval(function() {
     }
   })
 
-  if ((Object.keys(players).length - losers.length) === 1) {
+  if ((losers.length > 1) && ((Object.keys(players).length - losers.length) === 1)) {
     Object.keys(players).forEach(function(_id) {
       if (losers.indexOf(_id) == -1) {
         io.sockets.emit('win', _id)
