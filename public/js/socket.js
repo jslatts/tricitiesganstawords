@@ -13,7 +13,6 @@
   root.attackWords = {}
   root.usedWords = {}
   root.playerId = null
-  root.playerName = null
   root.playing = true;
   root.players = null;
 
@@ -23,6 +22,7 @@
   console.log('socket', socket.socket)
 
   $(function() {
+
 
     usedWords = $('#used-words')
     hud = $('#hud')
@@ -35,10 +35,6 @@
 
     socket.on('connect', function() {
       root.playerId = socket.socket.sessionid
-
-      root.playerName = prompt('Enter your name:', '')
-
-      socket.emit('name', root.playerName)
 
       socket.on('used', function(words) {
         if (!words) return
