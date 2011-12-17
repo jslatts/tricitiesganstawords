@@ -18,15 +18,13 @@ var players = {},
 
 io.sockets.on('connection', function (socket) {
 
-  socket.on('subscribe', function(fn) {
-    players[socket.id] = {
-      words: {}
-    }
-    fn(socket.id)
-  })
+  players[socket.id] = {
+    words: {}
+  }
 
-  socket.on('attack', function (word, id, fn) {
+  socket.on('attack', function (word, fn) {
     word = word.toUpperCase()
+    var id = socket.id;
     if (dictionary[word] && !playedWords[word]) {
       players[id].words[word] = null;
       playedWords[word] = null;
@@ -39,7 +37,8 @@ io.sockets.on('connection', function (socket) {
     }
   });
 
-  socket.on('destroy', function(word, id, fn) {
+  socket.on('destroy', function(word, fn) {
+    var id = socket.id;
     if (players[id].words[word]) {
       delete players[id].words[word];
       io.sockets.emit('destroy', {word: word, id: id})
