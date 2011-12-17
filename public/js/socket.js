@@ -13,6 +13,7 @@
   root.attackWords = {}
   root.usedWords = {}
   root.playerId = null
+  root.playerName = null
 
   // Socket listeners
   // ----------------
@@ -33,6 +34,10 @@
     socket.on('connect', function() {
       root.playerId = socket.socket.sessionid
 
+      root.playerName = prompt('Enter your name:', '')
+
+      socket.emit('name', root.playerName)
+
       socket.on('used', function(words) {
         if (!words) return
 
@@ -47,7 +52,7 @@
         players.empty()
         console.log(people)
         Object.keys(people).forEach(function(person) {
-          players.append('<li>'+person+'</li>')
+          players.append('<li>'+people[person].name+'</li>')
         })
       })
 

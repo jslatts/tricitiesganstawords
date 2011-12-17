@@ -18,13 +18,24 @@ var players = {},
 
 io.sockets.on('connection', function (socket) {
 
+
   players[socket.id] = {
-    words: {}
+    words: {},
+    name: socket.id
   }
 
   io.sockets.emit('players', players)
 
   socket.emit('used', playedWords)
+
+  socket.on('name', function(name) {
+    if (name !== '') {
+      players[socket.id].name = name
+    } else {
+      players[socket.id].name = 'Player' + Object.keys(players).length
+    }
+    io.sockets.emit('players', players)
+  })
 
   socket.on('attack', function (word, fn) {
     word = word.toUpperCase()
