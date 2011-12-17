@@ -108,7 +108,17 @@
         left: 0;
         right: 0;
         bottom: 70px;
+        min-height: 360px;
       }
+        #bar {
+          opacity: 0.5;
+          background: #900;
+          height: 5px;
+          position: absolute;
+          bottom: 311px;
+          left: 0;
+          right: 0;
+        }
       #input {
         background: #C2FFA3;
         border: 2px solid #666;
@@ -152,6 +162,7 @@
       text-shadow: 0 1px 0 #fff;
     }
     #modal {
+      display: none;
       font-size: 40px;
       font-family: "Shadows Into Light";
       text-shadow: 0 1px 0 #fff;
@@ -201,7 +212,9 @@
       <div id="them">
         <h1>Them</h1>
       </div>
-      <div id="game"></div>
+      <div id="game">
+        <div id="bar"></div>
+      </div>
       <div id="input"></div>
     </div>
   </div>

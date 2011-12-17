@@ -15,7 +15,7 @@
   root.usedWords = {}
   root.playerId = null
   root.playerName = null
-  root.playing = false
+  root.playing = true
   root.players = null
 
   // Socket listeners
@@ -109,8 +109,23 @@
       })
     }
 
-    function restartGame() {
+    function youLost() {
       modal
+        .fadeIn()
+        .queue(function(n) { $(this).html('You Lost!'); n() })
+        .delay(3000)
+        .fadeOut()
+      
+      root.playing = false
+    }
+
+    function winGame(id) {
+      root.playing = false
+      modal
+        .fadeIn()
+        .queue(function(n) { $(this).html('Game Over'); n() })
+        .delay(1500)
+        .queue(function(n) { $(this).html(players[id]+' Won!'); n() })
         .show()
         .queue(function(n) { $(this).html('Restarting'); n() })
         .delay(2000)
@@ -130,35 +145,10 @@
         })
     }
 
-    function youLost() {
-      modal
-        .fadeIn()
-        .queue(function(n) { $(this).html('You Lost!'); n() })
-        .delay(3000)
-        .fadeOut()
-      
-      root.playing = false
-    }
-
-    function endGame(id) {
-      modal
-        .fadeIn()
-        .queue(function(n) { $(this).html('Game Over'); n() })
-        .delay(1500)
-        .queue(function(n) { $(this).html(players[id]+' Won!'); n() })
-      
-      root.playing = false
-    }
-
-    function winGame() {
-      
-    }
-
     // Exports
     // -------
 
     root.attack = attack
-    root.restartGame = restartGame
   })
 
 })()
