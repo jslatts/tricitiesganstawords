@@ -90,6 +90,15 @@
         winGame(id)
       })
 
+      socket.on('start', function() {
+        console.log('start game')
+        startGame()
+      })
+
+      socket.on('gameOver', function() {
+        gameOver()
+      })
+
       // UI
       // --
 
@@ -121,8 +130,41 @@
       root.playing = false
     }
 
+    function gameOver() {
+      modal
+        .fadeIn()
+        .queue(function(n) { $(this).html('Game Over'); n() })
+        .delay(1500)
+
+      root.playing = false
+    }
+
+    function startGame() {
+      usedWords.empty()
+      exports.resetGame()
+
+      modal
+        .fadeIn()
+        .queue(function(n) { $(this).html('Starting Game...'); n() })
+        .delay(2000)
+        .queue(function(n) { $(this).html('5'); n() })
+        .delay(1000)
+        .queue(function(n) { $(this).html('4'); n() })
+        .delay(1000)
+        .queue(function(n) { $(this).html('3'); n() })
+        .delay(1000)
+        .queue(function(n) { $(this).html('2'); n() })
+        .delay(1000)
+        .queue(function(n) { $(this).html('1'); n() })
+        .delay(1000)
+        .queue(function(n) { $(this).html('Start!'); n() })
+        .fadeOut(function() {
+          root.playing = true
+        })
+    }
+
     function winGame(id) {
-      used.empty()
+      usedWords.empty()
       exports.resetGame()
       root.playing = false
 
@@ -131,8 +173,8 @@
         .queue(function(n) { $(this).html('Game Over'); n() })
         .delay(1500)
         .queue(function(n) { $(this).html(players[id]+' Won!'); n() })
-        .show()
-        .queue(function(n) { $(this).html('Restarting'); n() })
+        .delay(2000)
+        .queue(function(n) { $(this).html('Restarting...'); n() })
         .delay(2000)
         .queue(function(n) { $(this).html('5'); n() })
         .delay(1000)
