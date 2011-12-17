@@ -178,6 +178,7 @@
     // -------
 
     root.attack = attack
+    root.startGame = startGame
   })
 
 })()
