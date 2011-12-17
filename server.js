@@ -14,9 +14,14 @@ app.listen(3000, function () {
 var io = socket.listen(app)
 
 io.sockets.on('connection', function (socket) {
-  socket.on('attack', function (data, fn) {
-    if (dictionary[data]) {
-      socket.broadcast.emit('attack', data)
+
+  socket.on('subscribe', function(fn) {
+    fn(socket.id)
+  })
+
+  socket.on('attack', function (word, id, fn) {
+    if (dictionary[data.toUpperCase()]) {
+      socket.broadcast.emit('attack', {word: word, id: id})
       fn(null)
     } else {
       fn(true)
