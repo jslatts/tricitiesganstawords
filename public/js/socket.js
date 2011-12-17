@@ -14,8 +14,9 @@
   root.attackWords = {}
   root.usedWords = {}
   root.playerId = null
-  root.playing = true;
-  root.players = null;
+  root.playerName = null
+  root.playing = false
+  root.players = null
 
   // Socket listeners
   // ----------------
@@ -50,34 +51,41 @@
         root.players = people;
         players.empty()
         Object.keys(people).forEach(function(person) {
-          players.append('<li>'+people[person].name+'</li>')
+          players.append('<li id="p-'+person+'">'+people[person].name+'</li>')
         })
       })
 
+      // Actions
+      // -------
+
       socket.on('attack', function(str, id) {
-        if (root.playing) {
-          str = str.toLowerCase().trim()
-          handleUsed(str, id)
-          root.exports.incomingWord(str, (id === root.playerId))
-        }
+        if (!root.playing) return
+        str = str.toLowerCase().trim()
+        handleUsed(str, id)
+        root.exports.incomingWord(str, (id === root.playerId))
       })
 
       socket.on('block', function(str, id) {
+        if (!root.playing) return
+        str = str.toLowerCase().trim()
+        root.exports.destroyWord(str, (id === root.playerId))
+      })
+
+      // Win conditions
+      // --------------
+
+      socket.on('lose', function(id) {
+        players.find('#p-'+id).addClass('lost')
+
         if (root.playing) {
-          str = str.toLowerCase().trim()
-          root.exports.destroyWord(str, (id === root.playerId))
+          if (id === root.playerId) {
+            youLost()
+          }
         }
       })
 
-      socket.on('lose', function(id) {
-        if (root.playing) {
-          if (id === root.playerId) {
-            root.playing = false;
-            alert('You lost')
-          } else {
-            //
-          }
-        }
+      socket.on('win', function(id) {
+        winGame(id)
       })
 
       // UI
@@ -117,13 +125,33 @@
         .queue(function(n) { $(this).html('1'); n() })
         .delay(1000)
         .queue(function(n) { $(this).html('Start!'); n() })
-        .fadeOut()
+        .fadeOut(function() {
+          root.playing = true
+        })
     }
 
-    function endGame() {
+    function youLost() {
+      modal
+        .fadeIn()
+        .queue(function(n) { $(this).html('You Lost!'); n() })
+        .delay(3000)
+        .fadeOut()
+      
+      root.playing = false
+    }
+
+    function endGame(id) {
       modal
         .fadeIn()
         .queue(function(n) { $(this).html('Game Over'); n() })
+        .delay(1500)
+        .queue(function(n) { $(this).html(players[id]+' Won!'); n() })
+      
+      root.playing = false
+    }
+
+    function winGame() {
+      
     }
 
     // Exports

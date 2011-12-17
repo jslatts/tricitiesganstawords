@@ -107,10 +107,23 @@
     var text = paper.text(w/2, rbottom, currentWord)
     text.node.setAttribute('class', 'word input')
 
+    var hightlightMatches = function (targetWord) {
+      Object.keys(youWords.words).forEach(function(word) {
+        if (word.substring(0, targetWord.length) === targetWord) {
+          console.log('found match on ' + word)
+          $(youWords.words[word].node).children().css('fill', 'red');
+        }
+        else {
+          $(youWords.words[word].node).children().css('fill', 'white');
+        }
+      })
+    }
+
     function addLetter(letter) {
       currentWord += letter
       spacer += 1
       text.attr({'text': currentWord}).toFront()
+      hightlightMatches(currentWord)
     }
 
     function deleteLetter() {
