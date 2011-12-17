@@ -35,7 +35,6 @@
 
       socket.on('used', function(words) {
         if (!words) return
-
         Object.keys(words).forEach(function(str) {
           usedWords.prepend('<li>'+str.toUpperCase()+'</li>')
         })
@@ -43,9 +42,7 @@
 
       socket.on('players', function(people) {
         if (!people) return
-        
         players.empty()
-        console.log(people)
         Object.keys(people).forEach(function(person) {
           players.append('<li>'+person+'</li>')
         })
@@ -53,43 +50,31 @@
 
       socket.on('attack', function(str, id) {
         str = str.toLowerCase().trim()
-        console.log('server attack', str, id)
         handleUsed(str, id)
         root.exports.incomingWord(str, (id === root.playerId))
       })
 
       socket.on('block', function(str, id) {
         str = str.toLowerCase().trim()
-        console.log('server block', str, id)
         root.exports.destroyWord(str, (id === root.playerId))
       })
 
       // UI
       // --
 
-      $(document).bind('keypress', function(e) {
+      $(window).bind('keypress', function(e) {
         if (e.keyCode === 13) hud.fadeOut()
       })
     })
-
-    // Blocking
-    // --------
-
 
     // Attacking
     // ---------
 
     function attack(str, fn) {
       str = str.toLowerCase().trim()
-      
-      console.log('attack', str)
       socket.emit('attack', str, function(err) {
-        console.log('return: ', err)
         if (err) {
-          console.log('error', hud)
-          hud
-            .html(err)
-            .fadeIn()
+          hud.html(err).fadeIn()
         }
         fn && fn(err)
       })
@@ -98,11 +83,7 @@
     // Exports
     // -------
 
-    root.attack = attack
-
-    // Testing
-      
-      
+    root.attack = attack      
   })
 
 })()
