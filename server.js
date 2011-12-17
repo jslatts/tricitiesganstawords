@@ -25,26 +25,23 @@ io.sockets.on('connection', function (socket) {
   socket.on('attack', function (word, fn) {
     word = word.toUpperCase()
     var id = socket.id;
-    if (dictionary.hasOwnProperty(word) && !playedWords.hasOwnProperty(word)) {
-      players[id].words[word] = true;
-      playedWords[word] = true;
-      io.sockets.emit('attack', {word: word, id: id})
-      fn(null)
-    } else if (playedWords[word]) {
-      fn('Word already played')
+    if (dictionary.hasOwnProperty(word)) {
+      if (players[id].words.hasOwnProperty(word)) {
+        delete players[id].words[word];
+        io.sockets.emit('destroy', word, id)
+        fn(null)
+      } else {
+        if (!playedWords.hasOwnProperty(word)) {
+          players[id].words[word] = true;
+          playedWords[word] = true;
+          io.sockets.emit('attack', word, id)
+          fn(null)
+        } else {
+          fn('Word has been played')
+        }
+      }
     } else {
       fn('Not a valid word')
     }
   });
-
-  socket.on('destroy', function(word, fn) {
-    var id = socket.id;
-    if (players[id].words.hasOwnProperty(word)) {
-      delete players[id].words[word];
-      io.sockets.emit('destroy', {word: word, id: id})
-      fn(null)
-    } else {
-      fn('Word does not exist in players list')
-    }
-  })
 });
