@@ -14,28 +14,20 @@ app.listen(3000, function () {
 var io = socket.listen(app)
 
 var players = {},
-    playedWords = {}
+    playedWords = {},
+    losers = []
 
 io.sockets.on('connection', function (socket) {
 
 
   players[socket.id] = {
     words: {},
-    name: socket.id
+    name: 'Player' + (parseInt(Object.keys(players).length) + 1),
   }
 
   io.sockets.emit('players', players)
 
   socket.emit('used', playedWords)
-
-  socket.on('name', function(name) {
-    if (name !== '') {
-      players[socket.id].name = name
-    } else {
-      players[socket.id].name = 'Player' + Object.keys(players).length
-    }
-    io.sockets.emit('players', players)
-  })
 
   socket.on('attack', function (word, fn) {
     word = word.toUpperCase()
@@ -47,16 +39,26 @@ io.sockets.on('connection', function (socket) {
         fn(null)
       } else {
         if (!playedWords.hasOwnProperty(word)) {
-          Object.keys(players).forEach(function(_id) {
-            if (id !== _id) {
-              players[_id].words[word] = true;
-              if (Object.keys(players[_id].words).length >= 11) {
-                io.sockets.emit('lose', _id)
-              }
-            }
-          })
           playedWords[word] = true;
           io.sockets.emit('attack', word, id)
+          setTimeout(function() {
+            Object.keys(players).forEach(function(_id) {
+              if (id !== _id) {
+                players[_id].words[word] = true;
+                if (Object.keys(players[_id].words).length > 11) {
+                  losers.push(_id);
+                  io.sockets.emit('lose', _id)
+                }
+              }
+            })
+            if ((Object.keys(players).length - losers.length) === 1) {
+              Object.keys(players).forEach(function(_id) {
+                if (losers.indexOf(_id) == -1) {
+                  io.sockets.emit('win', _id)
+                }
+              })
+            }
+          }, 3*1000)
           fn(null)
         } else {
           fn('Word has been played')

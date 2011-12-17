@@ -132,8 +132,8 @@
         border: 1px solid #ccc;
         border-bottom-color: #bbb;
         -webkit-border-radius: 4px;
-        -moz-border-radius: 4px;
-        border-radius: 4px;
+           -moz-border-radius: 4px;
+                border-radius: 4px;
         -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
         -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -151,13 +151,35 @@
       text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
       text-shadow: 0 1px 0 #fff;
     }
+    #modal {
+      font-size: 40px;
+      font-family: "Shadows Into Light";
+      text-shadow: 0 1px 0 #fff;
+      width: 300px;
+      height: 200px;
+      line-height: 200px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -150px;
+      margin-top: -100px;
+      text-align: center;
+      background: #ccc;
+      color: black;
+      font-size: 30px;
+      z-index: 9999;
+      border: 1px solid #000;
+      -webkit-border-radius: 20px;
+         -moz-border-radius: 20px;
+              border-radius: 20px;
+    }
   </style>
 </head>
-<body> 
-  <div id="header">
-    <h1>Tri-Cities GANGSTA WeRDS!</h1>
-  </div>
+<body>
   <div id="wrapper">
+    <div id="modal">
+
+    </div>
     <div id="left">
       <div class="overlay"></div>
       <h2>Used Words</h2>
