@@ -15,6 +15,8 @@
   root.usedWords = {}
   root.playerId = null
   root.playerName = null
+  root.playing = true;
+  root.players = null;
 
   // Socket listeners
   // ----------------
@@ -49,6 +51,7 @@
 
       socket.on('players', function(people) {
         if (!people) return
+        root.players = people;
         players.empty()
         Object.keys(people).forEach(function(person) {
           players.append('<li>'+people[person].name+'</li>')
@@ -56,14 +59,29 @@
       })
 
       socket.on('attack', function(str, id) {
-        str = str.toLowerCase().trim()
-        handleUsed(str, id)
-        root.exports.incomingWord(str, (id === root.playerId))
+        if (root.playing) {
+          str = str.toLowerCase().trim()
+          handleUsed(str, id)
+          root.exports.incomingWord(str, (id === root.playerId))
+        }
       })
 
       socket.on('block', function(str, id) {
-        str = str.toLowerCase().trim()
-        root.exports.destroyWord(str, (id === root.playerId))
+        if (root.playing) {
+          str = str.toLowerCase().trim()
+          root.exports.destroyWord(str, (id === root.playerId))
+        }
+      })
+
+      socket.on('lose', function(id) {
+        if (root.playing) {
+          if (id === root.playerId) {
+            root.playing = false;
+            alert('You lost')
+          } else {
+            //
+          }
+        }
       })
 
       // UI

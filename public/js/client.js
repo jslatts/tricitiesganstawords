@@ -34,19 +34,24 @@
       , 'columnLocation': w*3/4
       , 'words': {}}
 
-    var drop = function(t, fromBottom ) {
-      console.log('wbottom is ' + wbottom)
-      console.log('fromBottom is ' + fromBottom)
-      yDest = wbottom-fromBottom-3
-      console.log('yDest is ' + yDest)
-      t.animate({y: yDest}, ((yDest-t.attrs.y)*defaultSpeed), function() {
-        console.log('bouncing up!')
-        var bounceUpDest = t.attrs.y-6
-        t.animate({y: bounceUpDest}, ((t.attrs.y-bounceUpDest)*defaultSpeed*2), function() {
-          console.log('bouncing settle!')
-          var bounceSettle = t.attrs.y+10
-          t.animate({y: bounceSettle}, ((bounceSettle-t.attrs.y)*defaultSpeed*2))
-        })
+    var drop = function(t, fromBottom) {
+      t.yDest = wbottom-fromBottom-3
+      t.seq = (t.seq || 0) + 1
+      t.animate({y: t.yDest}, ((t.yDest-t.attrs.y)*defaultSpeed), function() {
+        var seq = t.seq
+        return function(currentSeq) {
+          if (seq !== currentSeq) {return false}
+
+          t.yDest = t.attrs.y-6
+          t.animate({y: t.yDest}, ((t.attrs.y-t.yDest)*defaultSpeed*2), function() {
+            var seq = t.seq
+            return function(currentSeq) {
+              if (seq !== currentSeq) {return false}
+              t.yDest = t.attrs.y+10
+              t.animate({y: t.yDest}, ((t.yDest-t.attrs.y)*defaultSpeed*2))
+            }(t.seq)
+          })
+        }(t.seq)
       })
     }
 
