@@ -37,7 +37,7 @@
         if (!words) return
 
         Object.keys(words).forEach(function(str) {
-          usedWords.prepend('<li>'+str+'</li>')
+          usedWords.prepend('<li>'+str.toUpperCase()+'</li>')
         })
       })
 
@@ -104,5 +104,29 @@
       
       
   })
+
+})()
+
+;(function() {
+
+  // Font family definitions to be loaded, this should 
+  // be trimmed to only the families used in production
+  WebFontConfig = {
+    google : {
+      families : [
+        'Shadows+Into+Light'
+      ]
+    }
+  }
+
+  // Add the Google script to the page to allow for the 
+  // webfont declarations to be loaded
+  var wf = document.createElement('script')
+    , s = document.getElementsByTagName('script')[0]
+
+  wf.src = '//ajax.googleapis.com/ajax/libs/webfont/1/webfont.js'
+  wf.type = 'text/javascript'
+  wf.async = 'true'
+  s.parentNode.insertBefore(wf, s)
 
 })()

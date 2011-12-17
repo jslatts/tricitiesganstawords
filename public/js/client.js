@@ -12,8 +12,8 @@
     });
     var w = $('#holder').width()
       , h = $('#holder').height()
-      , defaultSpeed = 10
-      , wbottom = h - 60
+      , defaultSpeed = 5 
+      , wbottom = h - 72
       , rbottom = h - 33
       , rtop = h + 10
     
@@ -34,7 +34,10 @@
       , 'words': {}}
 
     var drop = function(t, fromBottom ) {
+      console.log('wbottom is ' + wbottom)
+      console.log('fromBottom is ' + fromBottom)
       yDest = wbottom-fromBottom
+      console.log('yDest is ' + yDest)
       t.animate({y: yDest}, ((yDest-t.attrs.y)*defaultSpeed))
     }
 
@@ -72,14 +75,14 @@
       if (!isMe) {
         attackText.node.setAttribute('class', 'word you')
         youWords.words[attackWord] = attackText 
-        youWords.bottomHeight += 12
         drop(attackText, youWords.bottomHeight)
+        youWords.bottomHeight += 12
       }
       else {
         attackText.node.setAttribute('class', 'word them')
         themWords.words[attackWord] = attackText
-        themWords.bottomHeight += 12
         drop(attackText, themWords.bottomHeight)
+        themWords.bottomHeight += 12
       }
 
     }
@@ -88,17 +91,18 @@
     var resetSpacer
     var currentWord = ''
     var text = paper.text(w/2, rbottom, currentWord)
+    attackText.node.setAttribute('class', 'word input')
 
     function addLetter(letter) {
       currentWord += letter
       spacer += 1
-      text.attr({'text': currentWord, 'font-size': 16}).toFront()
+      text.attr({'text': currentWord}).toFront()
     }
 
     function deleteLetter() {
       currentWord = currentWord.substring(0, currentWord.length -1)
       spacer -= 1
-      text.attr({'text': currentWord, 'font-size': 16}).toBack()
+      text.attr({'text': currentWord}).toBack()
     }
 
     function resetWord() {

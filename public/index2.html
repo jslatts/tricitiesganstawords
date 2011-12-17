@@ -29,11 +29,12 @@
       width: 175px;
       background: #ccc;
       overflow: auto;
+      font-family: "Shadows Into Light";
     }
       #right h2, #left h2 {
         margin: 0;
         text-align: center;
-        font-size: 15px;
+        font-size: 26px;
         line-height: 30px;
         height: 30px;
         border-bottom: 1px solid #777;
@@ -62,13 +63,15 @@
         position: absolute;
         width: 50%;
         text-align: center;
-        height: 30px;
+        height: 50px;
         overflow: hidden;
+        margin-top: -10px;
       }
         #you h1, #them h1 {
           margin: 0;
           padding: 0;
-          font-size: 20px;
+          font-size: 40px;
+          font-family: "Shadows Into Light";
         }
         #you {
           left: 0;
@@ -78,7 +81,7 @@
         }
       #game {
         background: #D6FFC2 url('images/pool_table.png');
-        border: 2px solid #aaa;
+        border: 1px solid #333;
         border-radius: 10px;
         position: absolute;
         top: 40px;
@@ -97,6 +100,14 @@
         bottom: 10px;
         height: 30px;
       }
+    #used-words {
+      text-transform: uppercase;
+    }
+    .word {
+      color: white !important;
+      text-shadow: 0 -1px 0 #000;
+      fill: white !important;
+    }
   </style>
 </head>
 <body> 
