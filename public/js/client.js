@@ -10,8 +10,9 @@
           if ( code == 8 ) return false;
        }
     });
-    var w = $(window).width(), 
-        h = $(window).height() - 100
+    var w = $(window).width()
+      , h = $(window).height() - 100
+      , defaultSpeed = 10
 
 
     $(window).resize(function(){
@@ -41,13 +42,13 @@
     themWords = {'bottomHeight': 12, 'words': {}}
 
     var drop = function(t, yDest ) {
-      t.animate({y: yDest}, 10000)
+      t.animate({y: yDest}, ((yDest-t.attrs.y)*defaultSpeed))
     }
 
     function reStackWords(wordList) {
       wordList.bottomHeight = 12
       Object.keys(wordList.words).forEach(function(word) {
-        wordList.words[word].attr({'y': h-(10+wordList.bottomHeight)})
+        drop(wordList.words[word], h-(10+wordList.bottomHeight))
         wordList.bottomHeight += 12
       })
     }
