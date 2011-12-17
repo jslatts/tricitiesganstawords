@@ -25,9 +25,9 @@ io.sockets.on('connection', function (socket) {
   socket.on('attack', function (word, fn) {
     word = word.toUpperCase()
     var id = socket.id;
-    if (dictionary[word] && !playedWords[word]) {
-      players[id].words[word] = null;
-      playedWords[word] = null;
+    if (dictionary.hasOwnProperty(word) && !playedWords.hasOwnProperty(word)) {
+      players[id].words[word] = true;
+      playedWords[word] = true;
       io.sockets.emit('attack', {word: word, id: id})
       fn(null)
     } else if (playedWords[word]) {
@@ -39,7 +39,7 @@ io.sockets.on('connection', function (socket) {
 
   socket.on('destroy', function(word, fn) {
     var id = socket.id;
-    if (players[id].words[word]) {
+    if (players[id].words.hasOwnProperty(word)) {
       delete players[id].words[word];
       io.sockets.emit('destroy', {word: word, id: id})
       fn(null)
