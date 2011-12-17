@@ -75,7 +75,7 @@ io.sockets.on('connection', function (socket) {
 });
 
 setInterval(function() {
-  if (Object.keys(players).length >= 1 && !gameStarted) {
+  if (Object.keys(players).length >= 2 && !gameStarted) {
     io.sockets.emit('start', true);
     gameStarted = true;
   }
