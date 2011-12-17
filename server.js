@@ -68,6 +68,9 @@ io.sockets.on('connection', function (socket) {
     delete players[socket.id]
     io.sockets.emit('players', players)
     count -= 1;
+    if (count <= 1) {
+      io.sockets.emit('gameOver')
+    }
   })
 });
 

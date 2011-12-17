@@ -35,23 +35,19 @@
       , 'words': {}}
 
     var drop = function(t, fromBottom) {
-      t.yDest = wbottom-fromBottom-3
-      t.seq = (t.seq || 0) + 1
-      t.animate({y: t.yDest}, ((t.yDest-t.attrs.y)*defaultSpeed), function() {
-        var seq = t.seq
-        return function(currentSeq) {
-          if (seq !== currentSeq) {return false}
-
-          t.yDest = t.attrs.y-6
-          t.animate({y: t.yDest}, ((t.attrs.y-t.yDest)*defaultSpeed*2), function() {
-            var seq = t.seq
-            return function(currentSeq) {
-              if (seq !== currentSeq) {return false}
-              t.yDest = t.attrs.y+10
-              t.animate({y: t.yDest}, ((t.yDest-t.attrs.y)*defaultSpeed*2))
-            }(t.seq)
+      t.finalDest = wbottom-fromBottom
+      var bounceDest = t.finalDest 
+      console.log('bounce is ' + bounceDest)
+      t.animate({y: bounceDest+3}, ((bounceDest+3-t.attrs.y)*defaultSpeed), function() {
+        if (bounceDest === t.finalDest) {
+          console.log('bounce up')
+          t.animate({y: bounceDest-6}, ((t.attrs.y-bounceDest+6)*defaultSpeed*2), function() {
+            if (bounceDest === t.finalDest) {
+              console.log('bounce down')
+              t.animate({y: bounceDest}, ((bounceDest-t.attrs.y)*defaultSpeed*2))
+            }
           })
-        }(t.seq)
+        }
       })
     }
 
