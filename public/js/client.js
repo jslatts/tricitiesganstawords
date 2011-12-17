@@ -12,8 +12,8 @@
     });
     var w = $('#holder').width()
       , h = $('#holder').height()
-      , defaultSpeed = 10
-      , wbottom = h - 60
+      , defaultSpeed = 5 
+      , wbottom = h - 72
       , rbottom = h - 33
       , rtop = h + 10
     
@@ -34,7 +34,10 @@
       , 'words': {}}
 
     var drop = function(t, fromBottom ) {
+      console.log('wbottom is ' + wbottom)
+      console.log('fromBottom is ' + fromBottom)
       yDest = wbottom-fromBottom
+      console.log('yDest is ' + yDest)
       t.animate({y: yDest}, ((yDest-t.attrs.y)*defaultSpeed))
     }
 
@@ -72,14 +75,14 @@
       if (!isMe) {
         attackText.node.setAttribute('class', 'word you')
         youWords.words[attackWord] = attackText 
-        youWords.bottomHeight += 12
         drop(attackText, youWords.bottomHeight)
+        youWords.bottomHeight += 12
       }
       else {
         attackText.node.setAttribute('class', 'word them')
         themWords.words[attackWord] = attackText
-        themWords.bottomHeight += 12
         drop(attackText, themWords.bottomHeight)
+        themWords.bottomHeight += 12
       }
 
     }
