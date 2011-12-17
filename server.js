@@ -17,13 +17,18 @@ var players = {},
     playedWords = {},
     losers = []
 
+var count = 0;
+
 io.sockets.on('connection', function (socket) {
 
 
+  count += 1;
+
   players[socket.id] = {
     words: {},
-    name: 'Player' + (parseInt(Object.keys(players).length) + 1),
+    name: 'Player' + count
   }
+
 
   io.sockets.emit('players', players)
 
@@ -45,7 +50,7 @@ io.sockets.on('connection', function (socket) {
             Object.keys(players).forEach(function(_id) {
               if (id !== _id) {
                 players[_id].words[word] = true;
-                if (Object.keys(players[_id].words).length > 11) {
+                if (Object.keys(players[_id].words).length >= 11) {
                   losers.push(_id);
                   io.sockets.emit('lose', _id)
                 }
@@ -76,5 +81,6 @@ io.sockets.on('connection', function (socket) {
   socket.on('disconnect', function() {
     delete players[socket.id]
     io.sockets.emit('players', players)
+    count -= 1;
   })
 });
