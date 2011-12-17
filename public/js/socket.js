@@ -9,6 +9,7 @@
     , hud
     , usedWords
     , players
+    , modal
   
   root.attackWords = {}
   root.usedWords = {}
@@ -25,6 +26,7 @@
     usedWords = $('#used-words')
     hud = $('#hud')
     players = $('#players')
+    modal = $('#modal')
 
     function handleUsed(str, id) {
       root.usedWords[str] = id
@@ -85,10 +87,36 @@
       })
     }
 
+    function restartGame() {
+      modal
+        .show()
+        .queue(function(n) { $(this).html('Restarting'); n() })
+        .delay(2000)
+        .queue(function(n) { $(this).html('5'); n() })
+        .delay(1000)
+        .queue(function(n) { $(this).html('4'); n() })
+        .delay(1000)
+        .queue(function(n) { $(this).html('3'); n() })
+        .delay(1000)
+        .queue(function(n) { $(this).html('2'); n() })
+        .delay(1000)
+        .queue(function(n) { $(this).html('1'); n() })
+        .delay(1000)
+        .queue(function(n) { $(this).html('Start!'); n() })
+        .fadeOut()
+    }
+
+    function endGame() {
+      modal
+        .fadeIn()
+        .queue(function(n) { $(this).html('Game Over'); n() })
+    }
+
     // Exports
     // -------
 
-    root.attack = attack      
+    root.attack = attack
+    root.restartGame = restartGame
   })
 
 })()
