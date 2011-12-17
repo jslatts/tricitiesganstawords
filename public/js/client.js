@@ -43,6 +43,7 @@
     }
 
     exports.destroyWord = function(destroyWord, isMe) {
+      destroyWord = destroyWord.toLowerCase()
       if (isMe) {
         youWords.words[destroyWord].attr({'text': ''})
         delete youWords.words[destroyWord]
@@ -65,11 +66,13 @@
       attackText.attr({'font-size': 16}).toFront()
 
       if (!isMe) {
+        attackText.node.setAttribute('class', 'word you')
         youWords.words[attackWord] = attackText 
         youWords.bottomHeight += 12
         drop(attackText, h-(10+youWords.bottomHeight))
       }
       else {
+        attackText.node.setAttribute('class', 'word them')
         themWords.words[attackWord] = attackText
         themWords.bottomHeight += 12
         drop(attackText, h-(10+themWords.bottomHeight))
@@ -80,7 +83,7 @@
     var spacer = 1
     var resetSpacer
     var currentWord = ''
-    var text = paper.text(w/3, h-80, currentWord)
+    var text = paper.text(w/3, h-20, currentWord)
 
     function addLetter(letter) {
       currentWord += letter
