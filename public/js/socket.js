@@ -15,8 +15,8 @@
   root.usedWords = {}
   root.playerId = null
   root.playerName = null
-  root.playing = false;
-  root.players = null;
+  root.playing = false
+  root.players = null
 
   // Socket listeners
   // ----------------
@@ -24,6 +24,7 @@
   console.log('socket', socket.socket)
 
   $(function() {
+
 
     usedWords = $('#used-words')
     hud = $('#hud')
@@ -37,10 +38,6 @@
 
     socket.on('connect', function() {
       root.playerId = socket.socket.sessionid
-
-      root.playerName = prompt('Enter your name:', '')
-
-      socket.emit('name', root.playerName)
 
       socket.on('used', function(words) {
         if (!words) return
@@ -128,9 +125,9 @@
         .queue(function(n) { $(this).html('1'); n() })
         .delay(1000)
         .queue(function(n) { $(this).html('Start!'); n() })
-        .fadeOut()
-
-      root.playing = true
+        .fadeOut(function() {
+          root.playing = true
+        })
     }
 
     function youLost() {
