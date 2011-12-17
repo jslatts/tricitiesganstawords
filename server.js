@@ -1,5 +1,6 @@
 var express = require('express')
   , socket = require('socket.io')
+  , dictionary = require('./dictionary')
 
 var app = express.createServer();
 
@@ -14,7 +15,11 @@ var io = socket.listen(app)
 
 io.sockets.on('connection', function (socket) {
   socket.on('attack', function (data, fn) {
-    socket.broadcast.emit('attack', data)
-    fn(true)
+    if (dictionary[data]) {
+      socket.broadcast.emit('attack', data)
+      fn(null)
+    } else {
+      fn(true)
+    }
   });
 });
