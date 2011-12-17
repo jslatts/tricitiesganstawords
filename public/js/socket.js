@@ -8,7 +8,7 @@
     })
   })
 
-  socket.on('attack', function(err, obj) {
+  socket.on('attack', function(obj) {
     var word = obj.word,
         isMe = obj.id === playerId ? true : false;
 
