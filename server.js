@@ -70,6 +70,7 @@ io.sockets.on('connection', function (socket) {
     count -= 1;
     if (count <= 1) {
       io.sockets.emit('gameOver')
+      gameStarted = false;
     }
   })
 });
@@ -87,7 +88,7 @@ setInterval(function() {
     }
   })
 
-  if ((losers.length > 1) && ((Object.keys(players).length - losers.length) === 1)) {
+  if ((losers.length >= 1) && ((Object.keys(players).length - losers.length) === 1)) {
     Object.keys(players).forEach(function(_id) {
       if (losers.indexOf(_id) == -1) {
         io.sockets.emit('win', _id)
