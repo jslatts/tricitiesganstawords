@@ -107,7 +107,7 @@
     var text = paper.text(w/2, rbottom, currentWord)
     text.node.setAttribute('class', 'word input')
 
-    exports.hightlightMatches = function (targetWord) {
+    var hightlightMatches = function (targetWord) {
       Object.keys(youWords.words).forEach(function(word) {
         if (word.substring(0, targetWord.length) === targetWord) {
           console.log('found match on ' + word)
