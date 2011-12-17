@@ -124,8 +124,6 @@
       modal
         .fadeIn()
         .queue(function(n) { $(this).html('You Lost!'); n() })
-        .delay(3000)
-        .fadeOut()
       
       root.playing = false
     }
@@ -160,6 +158,7 @@
         .queue(function(n) { $(this).html('Start!'); n() })
         .fadeOut(function() {
           root.playing = true
+          $(this).html('')
         })
     }
 
