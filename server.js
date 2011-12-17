@@ -48,7 +48,12 @@ io.sockets.on('connection', function (socket) {
       } else {
         if (!playedWords.hasOwnProperty(word)) {
           Object.keys(players).forEach(function(_id) {
-            if (id !== _id) players[_id].words[word] = true;
+            if (id !== _id) {
+              players[_id].words[word] = true;
+              if (Object.keys(players[_id].words).length >= 11) {
+                io.sockets.emit('lose', _id)
+              }
+            }
           })
           playedWords[word] = true;
           io.sockets.emit('attack', word, id)
