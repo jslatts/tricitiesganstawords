@@ -91,17 +91,18 @@
     var resetSpacer
     var currentWord = ''
     var text = paper.text(w/2, rbottom, currentWord)
+    attackText.node.setAttribute('class', 'word input')
 
     function addLetter(letter) {
       currentWord += letter
       spacer += 1
-      text.attr({'text': currentWord, 'font-size': 16}).toFront()
+      text.attr({'text': currentWord}).toFront()
     }
 
     function deleteLetter() {
       currentWord = currentWord.substring(0, currentWord.length -1)
       spacer -= 1
-      text.attr({'text': currentWord, 'font-size': 16}).toBack()
+      text.attr({'text': currentWord}).toBack()
     }
 
     function resetWord() {
