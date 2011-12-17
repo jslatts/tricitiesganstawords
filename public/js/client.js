@@ -125,10 +125,10 @@
 
     exports.resetGame = function() {
       Object.keys(youWords.words).forEach(function(word) {
-        exports.destroyWord(word)
+        exports.destroyWord(word, true)
       })
       Object.keys(themWords.words).forEach(function(word) {
-        exports.destroyWord(word)
+        exports.destroyWord(word, false)
       })
     } 
 
