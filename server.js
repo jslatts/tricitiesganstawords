@@ -18,17 +18,18 @@ var players = {},
     losers = []
 
 var count = 0;
+var playerId = 0;
 
 var gameStarted = false;
 
 io.sockets.on('connection', function (socket) {
 
-
+  playerId += 1;
   count += 1;
 
   players[socket.id] = {
     words: {},
-    name: 'Player' + count
+    name: 'Player' + playerId
   }
 
 
