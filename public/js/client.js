@@ -119,6 +119,15 @@
       })
     }
 
+    exports.resetGame() = function() {
+      Object.keys(youWords.words).forEach(function(word) {
+        exports.destroyWord(word)
+      }
+      Object.keys(themWords.words).forEach(function(word) {
+        exports.destroyWord(word)
+      }
+    } 
+
     function addLetter(letter) {
       currentWord += letter
       spacer += 1
