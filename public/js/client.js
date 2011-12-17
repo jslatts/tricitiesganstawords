@@ -16,7 +16,7 @@
       , wbottom = h - 72
       , rbottom = h - 33
       , rtop = h + 10
-      , verticalSpacing = 12
+      , verticalSpacing = 30
     
 
 

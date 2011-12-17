@@ -3,7 +3,7 @@
 <head>
   <style type="text/css">
     body {
-      background: #eeeeee url('images/wood_pattern.png') repeat 0 0;
+      background: #eeeeee url('images/batthern.png') repeat 0 0;
     }
     #header {
       height: 100px;
@@ -27,7 +27,6 @@
       top: 0;
       bottom: 0;
       width: 175px;
-      background: #ccc;
       overflow: auto;
       font-family: "Shadows Into Light";
     }
@@ -35,9 +34,20 @@
         margin: 0;
         text-align: center;
         font-size: 26px;
-        line-height: 30px;
-        height: 30px;
+        line-height: 50px;
+        height: 50px;
         border-bottom: 1px solid #777;
+
+        background-color: #e6e6e6;
+        background-repeat: no-repeat;
+        background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(25%, #ffffff), to(#e6e6e6));
+        background-image: -webkit-linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+        background-image: -moz-linear-gradient(top, #ffffff, #ffffff 25%, #e6e6e6);
+        background-image: -ms-linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+        background-image: -o-linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+        background-image: linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e6e6e6', GradientType=0);
+        
       }
       #left {
         left: 0;
@@ -46,6 +56,16 @@
       #right {
         right: 0;
         border-left: 1px solid #aaa;
+      }
+      .overlay {
+        opacity: 0.5;
+        background: #aaa;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: -1;
+        bottom: 0;
       }
     #game-wrapper, #holder {
       overflow: hidden;
@@ -93,20 +113,43 @@
         background: #C2FFA3;
         border: 2px solid #666;
         border-radius: 10px;
-        padding: 5px;
         position: absolute;
         left: 0;
         right: 0;
         bottom: 10px;
         height: 30px;
+
+        background-color: #e6e6e6;
+        background-repeat: no-repeat;
+        background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(25%, #ffffff), to(#e6e6e6));
+        background-image: -webkit-linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+        background-image: -moz-linear-gradient(top, #ffffff, #ffffff 25%, #e6e6e6);
+        background-image: -ms-linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+        background-image: -o-linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+        background-image: linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e6e6e6', GradientType=0);
+        padding: 5px 14px 6px;
+        border: 1px solid #ccc;
+        border-bottom-color: #bbb;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+        -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
       }
     #used-words {
       text-transform: uppercase;
     }
     .word {
-      color: white !important;
       text-shadow: 0 -1px 0 #000;
       fill: white !important;
+      font-size: 30px !important;
+    }
+    .input {
+      fill: #000 !important;
+      text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+      text-shadow: 0 1px 0 #fff;
     }
   </style>
 </head>
@@ -116,10 +159,12 @@
   </div>
   <div id="wrapper">
     <div id="left">
+      <div class="overlay"></div>
       <h2>Used Words</h2>
       <ul id="used-words"></ul>
     </div>
     <div id="right">
+      <div class="overlay"></div>
       <h2>Stats</h2>
       <ul id="players"></ul>
     </div>
