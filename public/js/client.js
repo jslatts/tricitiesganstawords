@@ -62,13 +62,13 @@
     exports.destroyWord = function(destroyWord, isMe) {
       destroyWord = destroyWord.toLowerCase()
       if (isMe) {
-        if (!youWords.words[destroyWords]) return
+        if (!youWords.words[destroyWord]) return
         youWords.words[destroyWord].attr({'text': ''})
         delete youWords.words[destroyWord]
         reStackWords(youWords)
       }
       else {
-        if (!themWords.words[destroyWords]) return
+        if (!themWords.words[destroyWord]) return
         themWords.words[destroyWord].attr({'text': ''})
         delete themWords.words[destroyWord]
         reStackWords(themWords)
