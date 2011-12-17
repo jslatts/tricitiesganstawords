@@ -37,9 +37,17 @@
     var drop = function(t, fromBottom ) {
       console.log('wbottom is ' + wbottom)
       console.log('fromBottom is ' + fromBottom)
-      yDest = wbottom-fromBottom
+      yDest = wbottom-fromBottom-3
       console.log('yDest is ' + yDest)
-      t.animate({y: yDest}, ((yDest-t.attrs.y)*defaultSpeed))
+      t.animate({y: yDest}, ((yDest-t.attrs.y)*defaultSpeed), function() {
+        console.log('bouncing up!')
+        var bounceUpDest = t.attrs.y-6
+        t.animate({y: bounceUpDest}, ((t.attrs.y-bounceUpDest)*defaultSpeed*2), function() {
+          console.log('bouncing settle!')
+          var bounceSettle = t.attrs.y+10
+          t.animate({y: bounceSettle}, ((bounceSettle-t.attrs.y)*defaultSpeed*2))
+        })
+      })
     }
 
     function reStackWords(wordList) {
@@ -85,7 +93,7 @@
         drop(attackText, themWords.bottomHeight)
         themWords.bottomHeight += verticalSpacing
       }
-
+      //$(attackText.node).lettering();
     }
 
     var spacer = 1
