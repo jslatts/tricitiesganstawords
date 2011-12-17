@@ -115,6 +115,12 @@
       })
     }
 
+    var resetHighlights = function (targetWord) {
+      Object.keys(youWords.words).forEach(function(word) {
+        $(youWords.words[word].node).children().css('fill', 'white');
+      })
+    }
+
     exports.resetGame = function() {
       Object.keys(youWords.words).forEach(function(word) {
         exports.destroyWord(word)
@@ -141,6 +147,7 @@
       currentWord = ''
       text.attr({'text': ''}).toBack()
       spacer = 1
+      resetHighlights()
     }
 
     document.onkeydown = function(ev) {
