@@ -119,7 +119,7 @@
       })
     }
 
-    exports.resetGame() = function() {
+    exports.resetGame = function() {
       Object.keys(youWords.words).forEach(function(word) {
         exports.destroyWord(word)
       })
