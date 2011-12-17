@@ -40,7 +40,7 @@
         right: 0;
         border-left: 1px solid #aaa;
       }
-    #holder-wrapper {
+    #game-wrapper, #holder {
       overflow: hidden;
       position: absolute;
       top: 10px;
@@ -66,7 +66,7 @@
         #them {
           right: 0;
         }
-      #holder {
+      #game {
         background: #D6FFC2;
         border: 2px solid #aaa;
         border-radius: 10px;
@@ -96,6 +96,7 @@
   <div id="wrapper">
     <div id="left">
       <h2>Used Words</h2>
+      <ol id="used-words"></ol>
       <div id='hud'>
         <span id='badWord'>Invalid Word</span>
       </div>
@@ -103,14 +104,15 @@
     <div id="right">
       <h2>Stats</h2>
     </div>
-    <div id="holder-wrapper">
+    <div id="holder"></div>
+    <div id="game-wrapper">
       <div id="you">
         <h1>You</h1>
       </div>
       <div id="them">
         <h1>Them</h1>
       </div>
-      <div id="holder"></div>
+      <div id="game"></div>
       <div id="input"></div>
     </div>
   </div>
