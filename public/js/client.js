@@ -23,15 +23,8 @@
     })
     var paper = Raphael('holder', w,h)
 
-    //Draw input area
-    var inputArea = paper.rect((w-400)/2, h-50, 400, 40, 10); 
-    var youTitle = paper.text(w/4-100, 12, 'You')
-    youTitle.attr({'font-size': 32})
-    var themTitle = paper.text(w*3/4+100, 12, 'Them')
-    themTitle.attr({'font-size': 32})
-
-    youWords = {'bottomHeight': 12, 'words': {}}
-    themWords = {'bottomHeight': 12, 'words': {}}
+    var youWords = {'bottomHeight': 12, 'words': {}}
+    var themWords = {'bottomHeight': 12, 'words': {}}
 
     var drop = function(t, yDest ) {
       t.animate({y: yDest}, ((yDest-t.attrs.y)*defaultSpeed))
@@ -59,10 +52,11 @@
     }
 
     exports.incomingWord = function(attackWord, isMe) {
+      attackWord = attackWord.toLowerCase()
       isMe = true
       console.log('Incoming word received ' + attackText + ' for ' + isMe ? 'me' : 'them')
       var attackText = paper.text(isMe ? w/4-100 : w*3/4+100, 30, attackWord)
-      attackText.attr({'font-size': 16}).toBack()
+      attackText.attr({'font-size': 16}).toFront()
 
       if (isMe) {
         youWords.words[attackWord] = attackText 
@@ -80,12 +74,12 @@
     var spacer = 1
     var resetSpacer
     var currentWord = ''
-    var text = paper.text((w)/2, h-30, currentWord)
+    var text = paper.text(w/3, h-80, currentWord)
 
     function addLetter(letter) {
       currentWord += letter
       spacer += 1
-      text.attr({'text': currentWord, 'font-size': 16}).toBack()
+      text.attr({'text': currentWord, 'font-size': 16}).toFront()
     }
 
     function deleteLetter() {
