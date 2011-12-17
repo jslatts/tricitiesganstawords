@@ -172,7 +172,7 @@
         .fadeIn()
         .queue(function(n) { $(this).html('Game Over'); n() })
         .delay(1500)
-        .queue(function(n) { $(this).html(players[id]+' Won!'); n() })
+        .queue(function(n) { $(this).html(players[id].name+' Won!'); n() })
         .delay(2000)
         .queue(function(n) { $(this).html('Restarting...'); n() })
         .delay(2000)
