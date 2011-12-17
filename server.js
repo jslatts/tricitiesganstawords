@@ -28,7 +28,7 @@ io.sockets.on('connection', function (socket) {
     if (dictionary.hasOwnProperty(word)) {
       if (players[id].words.hasOwnProperty(word)) {
         delete players[id].words[word];
-        io.sockets.emit('destroy', word, id)
+        io.sockets.emit('block', word, id)
         fn(null)
       } else {
         if (!playedWords.hasOwnProperty(word)) {
