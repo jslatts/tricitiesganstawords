@@ -38,13 +38,15 @@
       t.yDest = wbottom-fromBottom-3
       t.seq = (t.seq || 0) + 1
       t.animate({y: t.yDest}, ((t.yDest-t.attrs.y)*defaultSpeed), function() {
-        return function(seq) {
-          if (t.seq !== seq) {return false}
+        var seq = t.seq
+        return function(currentSeq) {
+          if (seq !== currentSeq) {return false}
 
           t.yDest = t.attrs.y-6
           t.animate({y: t.yDest}, ((t.attrs.y-t.yDest)*defaultSpeed*2), function() {
-            return function(seq) {
-              if (t.seq !== seq) {return false}
+            var seq = t.seq
+            return function(currentSeq) {
+              if (seq !== currentSeq) {return false}
               t.yDest = t.attrs.y+10
               t.animate({y: t.yDest}, ((t.yDest-t.attrs.y)*defaultSpeed*2))
             }(t.seq)
