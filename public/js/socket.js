@@ -122,7 +122,7 @@
     }
 
     function winGame(id) {
-      used.empty()
+      usedWords.empty()
       exports.resetGame()
       root.playing = false
 
