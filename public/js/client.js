@@ -1,7 +1,8 @@
 (function() {
   //Setup
   exports = typeof exports !== 'undefined' ? exports : {}
-  window.onload = function() {
+  $(function() {
+    
     $(document).unbind('keypress');
 
     $(document).keypress(function (e) {
@@ -29,14 +30,6 @@
     youTitle.attr({'font-size': 32})
     var themTitle = paper.text(w*3/4+100, 12, 'Them')
     themTitle.attr({'font-size': 32})
-
-    //Calls back with fn(err)
-    function attack(word, fn) {
-      //return fn('crappy word') //sad
-      exports.incomingWord(word)
-      return fn && fn() //happy
-    }
-
 
     youWords = {'bottomHeight': 12, 'words': {}}
     themWords = {'bottomHeight': 12, 'words': {}}
@@ -138,5 +131,5 @@
         addLetter(letter)
       }
     }
-  }
+  })
 }())

@@ -13,18 +13,35 @@ app.listen(3000, function () {
 
 var io = socket.listen(app)
 
+var players = {},
+    playedWords = {}
+
 io.sockets.on('connection', function (socket) {
 
-  socket.on('subscribe', function(fn) {
-    fn(socket.id)
-  })
+  players[socket.id] = {
+    words: {}
+  }
 
-  socket.on('attack', function (word, id, fn) {
-    if (dictionary[data.toUpperCase()]) {
-      socket.broadcast.emit('attack', {word: word, id: id})
-      fn(null)
+  socket.on('attack', function (word, fn) {
+    word = word.toUpperCase()
+    var id = socket.id;
+    if (dictionary.hasOwnProperty(word)) {
+      if (players[id].words.hasOwnProperty(word)) {
+        delete players[id].words[word];
+        io.sockets.emit('destroy', word, id)
+        fn(null)
+      } else {
+        if (!playedWords.hasOwnProperty(word)) {
+          players[id].words[word] = true;
+          playedWords[word] = true;
+          io.sockets.emit('attack', word, id)
+          fn(null)
+        } else {
+          fn('Word has been played')
+        }
+      }
     } else {
-      fn(true)
+      fn('Not a valid word')
     }
   });
 });

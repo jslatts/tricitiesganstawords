@@ -1,13 +1,35 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>  
-    <script type="text/javascript" src="js/raphael-min.js"></script>  
-    <script type="text/javascript" src="js/client.js"></script>  
+  <style type="text/css">
+    #header {
+      width: 450px;
+      margin-left: auto;
+      margin-right: auto
+    }
+    #hud {
+      height:50;
+      color:red;
+      display:none
+    }
+  </style>
 </head>
-    <body> 
-      <div style='width:450px;margin-left:auto;margin-right:auto'><h1>Tri-Cities GANGSTA WeRDS!</h1></div>
-      <div id='hud' style='height:50;color:red;display:none'><span id='badWord'>Invalid Word</span></div>
-        <div id="holder"></div> 
-    </body> 
+<body> 
+  <div id="header">
+    <h1>Tri-Cities GANGSTA WeRDS!</h1>
+  </div>
+  <div id='hud'>
+    <span id='badWord'>Invalid Word</span>
+  </div>
+  <div id="holder"></div>
+
+  <script src="/socket.io/socket.io.js"></script> 
+  <script src="js/underscore-min.js"></script>
+  <script src="js/jquery-1.7.1.min.js"></script> 
+  <script src="js/jquery-ui-1.8.16.custom.min.js"></script>
+  <script src="js/raphael-min.js"></script> 
+  
+  <script src="js/client.js"></script>
+  <script src="js/socket.js"></script>
+</body> 
 </html>
