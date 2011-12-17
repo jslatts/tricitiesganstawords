@@ -8,7 +8,7 @@
     , socket = io.connect()
     , hud
     , usedWords
-    , players
+    , playersList
     , modal
   
   root.attackWords = {}
@@ -28,7 +28,7 @@
 
     usedWords = $('#used-words')
     hud = $('#hud')
-    players = $('#players')
+    playersList = $('#players')
     modal = $('#modal')
 
     function handleUsed(str, id) {
@@ -49,9 +49,9 @@
       socket.on('players', function(people) {
         if (!people) return
         root.players = people;
-        players.empty()
+        playersList.empty()
         Object.keys(people).forEach(function(person) {
-          players.append('<li id="p-'+person+'">'+people[person].name+'</li>')
+          playersList.append('<li id="p-'+person+'">'+people[person].name+'</li>')
         })
       })
 
@@ -75,7 +75,8 @@
       // --------------
 
       socket.on('lose', function(id) {
-        players.find('#p-'+id).addClass('lost')
+        console.log('lose', id)
+        playersList.find('#p-'+id).addClass('lost')
 
         if (root.playing) {
           if (id === root.playerId) {
@@ -85,6 +86,7 @@
       })
 
       socket.on('win', function(id) {
+        console.log('win', id)
         winGame(id)
       })
 
@@ -120,7 +122,10 @@
     }
 
     function winGame(id) {
+      used.empty()
+      exports.resetGame()
       root.playing = false
+
       modal
         .fadeIn()
         .queue(function(n) { $(this).html('Game Over'); n() })
