@@ -19,13 +19,9 @@ var players = {},
 io.sockets.on('connection', function (socket) {
 
   socket.on('subscribe', function(fn) {
-<<<<<<< HEAD
-    console.log('subscribe')
-=======
     players[socket.id] = {
       words: {}
     }
->>>>>>> a546788f5560c96cfc266df14a7ed2b87a5977ba
     fn(socket.id)
   })
 
