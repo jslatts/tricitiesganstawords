@@ -105,18 +105,9 @@
 
     //Handle keystrokes to get new words
     document.onkeypress = function(ev) {
-      console.log('char code is ' + ev.charCode)
       if (ev.keyCode === 13) {
-        $('#hud').fadeOut()
         attack(currentWord, function(err) {
-          if (err) {
-            console.log('Word not valid or has been used')
-            $('#hud').fadeIn()
-            return
-          }
-          else {
-            resetWord()
-          }
+          resetWord()
         })
       }
       else {

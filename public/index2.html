@@ -12,9 +12,15 @@
       display: none;
     }
     #hud {
-      height: 50px;
+      height: 30px;
       color: red;
-      display: none
+      display: none;
+      position: absolute;
+      width: 200px;
+      left: 50%;
+      right: 50%;
+      margin-left: -100px;
+      line-height: 30px;
     }
     #left, #right {
       position: absolute;
@@ -101,15 +107,15 @@
     <div id="left">
       <h2>Used Words</h2>
       <ol id="used-words"></ol>
-      <div id='hud'>
-        <span id='badWord'>Invalid Word</span>
-      </div>
     </div>
     <div id="right">
       <h2>Stats</h2>
     </div>
     <div id="holder"></div>
     <div id="game-wrapper">
+      <div id="hud">
+        <span id="badWord">Invalid Word</span>
+      </div>
       <div id="you">
         <h1>You</h1>
       </div>

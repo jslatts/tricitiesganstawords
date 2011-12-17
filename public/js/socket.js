@@ -5,7 +5,9 @@
 ;(function() {
 
   var root = this
-    , socket = io.connect('http://localhost/')
+    , socket = io.connect()
+    , hud
+    , usedWords
   
   root.attackWords = {}
   root.usedWords = {}
@@ -18,7 +20,8 @@
 
   $(function() {
 
-    var usedWords = $('#used-words')
+    usedWords = $('#used-words')
+    hud = $('#hud')
 
     function handleUsed(str, id) {
       root.usedWords[str] = id
@@ -36,10 +39,17 @@
         root.exports.incomingWord(str, (id === root.playerId))
       })
 
-      socket.on('destroy', function(str, id) {
+      socket.on('block', function(str, id) {
         console.log('server block')
         
         root.exports.destroyWord(str, (id === root.playerId))
+      })
+
+      // UI
+      // --
+
+      $(document).bind('keypress', function(e) {
+        if (e.keyCode === 13) hud.fadeOut()
       })
     })
 
@@ -53,8 +63,12 @@
     function attack(str, fn) {
       console.log('attack', str)
       socket.emit('attack', str, function(err) {
+        console.log('return: ', err)
         if (err) {
-          console.log('Attack Error: ', err)
+          console.log('error', hud)
+          hud
+            .html(err)
+            .fadeIn()
         }
         fn && fn(err)
       })
