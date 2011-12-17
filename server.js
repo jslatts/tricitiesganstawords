@@ -22,6 +22,10 @@ io.sockets.on('connection', function (socket) {
     words: {}
   }
 
+  socket.emit('players', players)
+
+  socket.emit('used', playedWords)
+
   socket.on('attack', function (word, fn) {
     word = word.toUpperCase()
     var id = socket.id;
@@ -32,7 +36,9 @@ io.sockets.on('connection', function (socket) {
         fn(null)
       } else {
         if (!playedWords.hasOwnProperty(word)) {
-          players[id].words[word] = true;
+          Object.keys(players).forEach(function(_id) {
+            if (id !== _id) players[_id].words[word] = true;
+          })
           playedWords[word] = true;
           io.sockets.emit('attack', word, id)
           fn(null)
@@ -44,4 +50,8 @@ io.sockets.on('connection', function (socket) {
       fn('Not a valid word')
     }
   });
+
+  socket.on('disconnect', function() {
+    delete players[socket.id]
+  })
 });
